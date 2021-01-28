@@ -2,17 +2,19 @@
   <b-container>
     <Video />
     <FormContato />
-    <footer>Footer</footer>
+    <Footer />
   </b-container>
 </template>
 
 <script>
 import Video from '@/components/Video'
 import FormContato from '@/components/FormContato'
+import Footer from '@/components/Footer'
 export default {
   components: {
     Video,
     FormContato,
+    Footer,
   },
 }
 </script>

@@ -1,7 +1,18 @@
 <template>
-  <b-container> MadQueen </b-container>
+  <b-container>
+    <b-img :src="logoLink"></b-img>
+  </b-container>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      logoLink: require('~/static/MadQueenLogo.png'),
+    }
+  },
+}
+</script>
 <style>
 .NuxtLogo {
   animation: 1s appear;
