@@ -65,12 +65,12 @@ export default {
   data() {
     return {
       form: {
+        text: '',
+        subject: '',
         email: '',
         name: '',
         food: null,
         checked: [],
-        text,
-        subject,
       },
       motive: [
         { text: 'Motivo', value: null },
