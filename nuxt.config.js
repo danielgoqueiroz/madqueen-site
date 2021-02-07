@@ -4,9 +4,9 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'marqueen-site',
+    title: 'Mad Queen Rock',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'pt-br',
     },
     meta: [
       { charset: 'utf-8' },
@@ -40,6 +40,10 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
   ],
+
+  bootstrapVue: {
+    icons: true,
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},

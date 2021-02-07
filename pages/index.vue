@@ -1,22 +1,15 @@
 <template>
   <b-container>
     <Video />
+    <SocialMedias />
+    <Integrantes />
     <FormContato />
     <Footer />
   </b-container>
 </template>
 
 <script>
-import Video from '@/components/Video'
-import FormContato from '@/components/FormContato'
-import Footer from '@/components/Footer'
-export default {
-  components: {
-    Video,
-    FormContato,
-    Footer,
-  },
-}
+export default {}
 </script>
 
 <style>
