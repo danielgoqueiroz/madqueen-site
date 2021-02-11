@@ -62,14 +62,6 @@
           <b-button type="submit" variant="info">Enviar</b-button>
         </b-form>
       </b-col>
-      <b-col>
-        <p>
-          <b><b-icon-telephone /></b> (48) 98814-9614
-        </p>
-        <p>
-          <b><b-icon-chat-left-text /></b> contato@madqueenrock.com
-        </p>
-      </b-col>
     </b-row>
   </b-container>
 </template>
