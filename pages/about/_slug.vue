@@ -35,4 +35,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+#article {
+  text-align: center;
+}
+</style>
