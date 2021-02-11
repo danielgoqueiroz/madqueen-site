@@ -16,6 +16,7 @@
         :name="integrante.name"
         :about="integrante.about"
         :image="integrante.image"
+        :path="integrante.path"
         v-for="integrante in integrantes"
         :key="integrante.name"
       />
@@ -30,16 +31,19 @@ export default {
     return {
       integrantes: [
         {
+          path: '/about/manu',
           name: 'Manu',
           about: 'Vocal',
           image: require('@/static/slide_manu.jpg'),
         },
         {
+          path: '/about/dani',
           name: 'Dani',
           about: 'Baixo',
           image: require('@/static/slide_dani.jpg'),
         },
         {
+          path: '/about/marcio',
           name: 'Márcio',
           about: 'Guitarra',
           image: require('@/static/slide_marcio.jpg'),

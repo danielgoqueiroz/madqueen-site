@@ -1,16 +1,19 @@
 <template>
   <b-container>
-    <b-carousel-slide
-      :caption="name"
-      :text="about"
-      :img-src="image"
-    ></b-carousel-slide>
+    <b-link :to="path">
+      <b-carousel-slide :caption="name" :text="about" :img-src="image" />
+    </b-link>
   </b-container>
 </template>
 
 <script>
 export default {
-  props: ['name', 'image', 'about'],
+  methods: {
+    goTo() {
+      this.$router.push(path)
+    },
+  },
+  props: ['name', 'image', 'about', 'path'],
 }
 </script>
 <style>
