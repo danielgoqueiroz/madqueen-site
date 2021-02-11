@@ -25,9 +25,7 @@
 </template>
 
 <script>
-import Integrante from './Integrante.vue'
 export default {
-  components: { Integrante },
   data() {
     return {
       integrantes: [
