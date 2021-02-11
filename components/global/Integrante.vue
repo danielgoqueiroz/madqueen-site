@@ -8,12 +8,12 @@
 
 <script>
 export default {
-  methods: {
-    goTo() {
-      this.$router.push(path)
-    },
+  props: {
+    name: { type: String, default: '' },
+    image: { type: String, default: '' },
+    about: { type: String, default: '' },
+    path: { type: String, default: '' },
   },
-  props: ['name', 'image', 'about', 'path'],
 }
 </script>
 <style>

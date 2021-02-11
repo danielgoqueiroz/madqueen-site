@@ -4,7 +4,7 @@
       <b-card
         :title="about.title"
         class="mb-2"
-        style="max-width: 50rem"
+        style="max-width"
         :img-src="getImage(about.imgtitle)"
         img-top
         :alt="about.alt"

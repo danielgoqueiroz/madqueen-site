@@ -13,12 +13,12 @@
       @sliding-end="onSlideEnd"
     >
       <Integrante
+        v-for="integrante in integrantes"
+        :key="integrante.name"
         :name="integrante.name"
         :about="integrante.about"
         :image="integrante.image"
         :path="integrante.path"
-        v-for="integrante in integrantes"
-        :key="integrante.name"
       />
     </b-carousel>
   </div>
@@ -27,6 +27,7 @@
 <script>
 import Integrante from './Integrante.vue'
 export default {
+  components: { Integrante },
   data() {
     return {
       integrantes: [
@@ -62,7 +63,6 @@ export default {
       this.sliding = false
     },
   },
-  components: { Integrante },
 }
 </script>
 <style>

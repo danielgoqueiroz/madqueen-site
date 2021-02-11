@@ -111,12 +111,6 @@ export default {
         method: 'get',
         url: 'http://madqueen.herokuapp.com/api/',
       })
-        .then(function (response) {
-          console.log(response.data)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
     },
     async sendEmail() {
       await this.$axios({
