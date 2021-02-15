@@ -125,7 +125,8 @@ export default {
           this.showAlert()
         })
         .catch(function (error) {
-          console.log(error)
+          alert(error)
+          // console.log(error)
         })
     },
   },

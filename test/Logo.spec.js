@@ -1,5 +1,5 @@
-import { mount } from '@vue/test-utils'
-import Logo from '@/components/global/Logo.vue'
+// import { mount } from '@vue/test-utils'
+// import Logo from '@/components/global/Logo.vue'
 
 describe('Logo', () => {
   test('Teste cego', () => {
