@@ -1,14 +1,32 @@
 <template>
-  <b-container>
+  <b-container style="text-align: center">
+    <h1>Integrantes</h1>
+    <transition-group name="btn-effect">
+      <b-button
+        v-for="integrante in integrantes"
+        :key="integrante.title"
+        class="btn"
+        @click="integranteSelected = integrante"
+      >
+        <b-img
+          class="avatar"
+          :src="integrante.avatar"
+          v-bind="avatarProps"
+          rounded="circle"
+        />
+      </b-button>
+    </transition-group>
     <Integrante
-      v-for="integrante in integrantes"
-      :key="integrante.title"
-      :title="integrante.title"
-      :description="integrante.description"
-      :alt="integrante.alt"
-      :about="integrante.about"
-      :imgsslide="integrante.imgsslide"
-      :influences="integrante.influences"
+      :title="integranteSelected.title"
+      :description="integranteSelected.description"
+      :alt="integranteSelected.alt"
+      :about="integranteSelected.about"
+      :imgsslide="
+        integranteSelected.imgsslide != undefined
+          ? integranteSelected.imgsslide
+          : []
+      "
+      :influences="integranteSelected.influences"
     />
   </b-container>
 </template>
@@ -17,11 +35,26 @@
 export default {
   data() {
     return {
+      integranteSelected: {},
       integrantes: {},
+      avatarProps: {
+        width: 50,
+        height: 50,
+        class: 'm1',
+      },
+      error: '',
     }
   },
   async mounted() {
-    this.integrantes = await this.$content('about').fetch()
+    await this.$content('about')
+      .fetch()
+      .then((result) => {
+        this.integrantes = result
+        this.integranteSelected = this.integrantes[0]
+      })
+      .catch((err) => {
+        this.error = err
+      })
   },
   methods: {
     onSlideStart(slide) {
@@ -33,4 +66,30 @@ export default {
   },
 }
 </script>
-<style></style>
+<style>
+.btn,
+.btn:hover,
+.btn:active,
+.btn:link {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  border-radius: 100%;
+}
+.avatar:hover {
+  border: 0 solid white;
+  size: 25px;
+}
+
+.btn-effect-enter-active {
+  transition: all 0.3s ease;
+}
+.btn-effect-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.btn-effect-enter,
+.btn-effect-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>

@@ -12,7 +12,7 @@ export default {}
 </script>
 <style>
 body {
-  background: #030609;
+  background: rgb(6, 6, 6);
 }
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',

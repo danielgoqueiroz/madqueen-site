@@ -33,19 +33,19 @@ export default {
           path: '/about/manu',
           name: 'Manu',
           about: 'Vocal',
-          image: require('@/static/slide_manu.jpg'),
+          image: require('@/static/images/slide/slide_manu.jpg'),
         },
         {
           path: '/about/dani',
           name: 'Dani',
           about: 'Baixo',
-          image: require('@/static/slide_dani.jpg'),
+          image: require('@/static/images/slide/slide_dani.jpg'),
         },
         {
           path: '/about/marcio',
           name: 'Márcio',
           about: 'Guitarra',
-          image: require('@/static/slide_marcio.jpg'),
+          image: require('@/static/images/slide/slide_marcio.jpg'),
         },
       ],
 
