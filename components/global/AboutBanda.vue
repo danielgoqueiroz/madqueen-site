@@ -28,7 +28,8 @@ export default {
 <style>
 .a-banda {
   margin-top: 20px;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   padding: 15px;
   position: static;
   left: 0;

@@ -7,12 +7,13 @@
         </h2>
         <SlideImages :images="imgsslide" />
         <br />
-        <i>Sobre</i>
+        <br />
+        <i class="center">Sobre</i>
         <p>
           {{ about }}
         </p>
         <br />
-        <i>Influências</i>
+        <i class="center">Influências</i>
         <p>{{ influences }}</p>
       </b-row>
     </b-col>
@@ -45,5 +46,9 @@ h2 {
   font-size: 16px;
   padding: 15px;
   margin-top: 15px;
+  text-align: left;
+}
+.center {
+  text-align: center;
 }
 </style>
