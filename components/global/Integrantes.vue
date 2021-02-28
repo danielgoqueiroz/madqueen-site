@@ -1,21 +1,21 @@
 <template>
   <b-container style="text-align: center">
     <h1>Integrantes</h1>
-    <transition-group name="btn-effect">
-      <b-button
-        v-for="integrante in integrantes"
-        :key="integrante.title"
-        class="btn"
-        @click="integranteSelected = integrante"
-      >
-        <b-img
-          class="avatar"
-          :src="integrante.avatar"
-          v-bind="avatarProps"
-          rounded="circle"
-        />
-      </b-button>
-    </transition-group>
+
+    <b-link
+      v-for="integrante in integrantes"
+      :key="integrante.title"
+      class="btn"
+      @click="integranteSelected = integrante"
+    >
+      <b-img
+        class="avatar"
+        :src="integrante.avatar"
+        v-bind="avatarProps"
+        rounded="circle"
+      />
+    </b-link>
+
     <Integrante
       :title="integranteSelected.title"
       :description="integranteSelected.description"
@@ -68,7 +68,6 @@ export default {
 </script>
 <style>
 .btn,
-.btn:hover,
 .btn:active,
 .btn:link {
   background-color: transparent;
@@ -76,20 +75,20 @@ export default {
   box-shadow: none;
   border-radius: 100%;
 }
+@keyframes fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+.avatar {
+  opacity: 0.4;
+  transition: 0.2s;
+}
 .avatar:hover {
-  border: 0 solid white;
-  size: 25px;
-}
-
-.btn-effect-enter-active {
-  transition: all 0.3s ease;
-}
-.btn-effect-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
-.btn-effect-enter,
-.btn-effect-leave-to {
-  transform: translateX(10px);
-  opacity: 0;
+  opacity: 1;
+  -webkit-transform: scale(1.2);
 }
 </style>
