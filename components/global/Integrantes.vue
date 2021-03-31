@@ -69,12 +69,6 @@ export default {
 <style>
 .btn,
 .btn:active,
-.btn:link {
-  background-color: transparent;
-  border-color: transparent;
-  box-shadow: none;
-  border-radius: 100%;
-}
 @keyframes fade {
   from {
     opacity: 1;

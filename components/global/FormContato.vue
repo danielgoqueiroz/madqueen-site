@@ -107,10 +107,8 @@ export default {
       this.form.message = ''
     },
     startServer() {
-      this.$axios({
-        method: 'get',
-        url: 'http://madqueen.herokuapp.com/api/',
-      })
+      console.log('Rock is on!')
+      this.$api.$get('http://madqueen.herokuapp.com/api/status')
     },
     async sendEmail() {
       await this.$axios({

@@ -35,10 +35,4 @@ export default {}
 .links {
   padding-top: 15px;
 }
-body {
-  background-image: url('/static/fire.jpg');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-}
 </style>
