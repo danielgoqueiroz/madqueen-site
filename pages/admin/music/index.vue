@@ -1,9 +1,15 @@
 <template>
-  <b-container> <h1>Musicas</h1> </b-container>
+  <b-container>
+    <h1>Musicas</h1>
+    <ListMusic />
+    <FormMusic />
+  </b-container>
 </template>
 
 <script>
+import FormMusic from '../../../components/global/music/FormMusic.vue'
 export default {
+  components: { FormMusic },
   data() {
     return {}
   },

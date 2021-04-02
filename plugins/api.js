@@ -17,15 +17,16 @@ export default function ({ $axios, redirect }, inject) {
   // interceptors
   api.interceptors.request.use((config) => {
     const token = localStorage.getItem('token')
-    if (token != undefined && token != null && token.includes('Bearer')) {
+    if (token !== undefined && token != null && token.includes('Bearer')) {
       config.headers.Authorization = token
     }
 
     return config
   })
   api.interceptors.response.use((response) => {
-    const token = response.headers['authorization']
-    if (token != undefined && token != null && token.includes('Bearer')) {
+    console.log(response)
+    const token = response.headers.authorization
+    if (token !== undefined && token !== null && token.includes('Bearer')) {
       localStorage.setItem('token', token)
     }
     return response
