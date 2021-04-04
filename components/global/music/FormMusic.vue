@@ -1,8 +1,29 @@
 <template>
   <b-container
-    ><h3>Nova Banda</h3>
+    ><h3>Nova Musica</h3>
     <h2><b-icon-plus /></h2>
     <b-card>
+      Selecione uma banda
+      <b-form-select
+        v-model="music.band.id"
+        :options="bands"
+        :select-size="4"
+      />
+      <b-input-group
+        description="Adicionar música"
+        label="Nova música"
+        class="mt-3"
+      >
+        <b-form-input v-model="newBand.name" placeholder="Nome"></b-form-input>
+        <b-input-group-append>
+          <b-button
+            @click="saveBand()"
+            :disabled="newBand.name == null || newBand.name.length < 3"
+            >Adicionar banda</b-button
+          >
+        </b-input-group-append>
+      </b-input-group>
+
       <b-input
         class="my-1"
         v-model="music.title"
@@ -17,8 +38,8 @@
       <b-row>
         <b-col>
           <b-form-textarea
-            class="my-1"
             v-model="music.letterOriginal"
+            class="my-1"
             placeholder="Letra Original"
             rows="10"
             max-rows="6"
@@ -26,8 +47,8 @@
         </b-col>
         <b-col>
           <b-form-textarea
-            class="my-1"
             v-model="music.letterTranslation"
+            class="my-1"
             placeholder="Letra Traduzida"
             rows="10"
             max-rows="6"
@@ -35,14 +56,14 @@
         </b-col>
       </b-row>
       <b-input
+        v-model="music.youtubeLink"
         type="url"
         class="my-1"
-        v-model="music.youtubeLink"
         placeholder="Link youtube"
       ></b-input>
       <b-form-file
-        class="my-1"
         v-model="music.imageLink"
+        class="my-1"
         placeholder="Imagem"
       ></b-form-file>
       <b-button class="my-1" @click="save()">Salvar</b-button>
@@ -54,7 +75,14 @@
 export default {
   data() {
     return {
+      newBand: {
+        name: null,
+      },
+      bands: [],
       music: {
+        band: {
+          id: null,
+        },
         title: '',
         cratedYear: 1990,
         letterOriginal: '',
@@ -64,9 +92,52 @@ export default {
       },
     }
   },
+  mounted() {
+    console.log('get bands')
+    this.getBands()
+  },
   methods: {
+    async saveBand() {
+      console.log(this.newBand)
+      await this.$api
+        .post('band', this.newBand)
+        .then((result) => {
+          console.log(result)
+          this.bands.push({ value: result.data.id, text: result.data.name })
+          this.newBand = {}
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    getBands() {
+      this.$api
+        .get('/band')
+        .then((result) => {
+          const bands = result.data.map((b) => {
+            console.log(b)
+            let band = {
+              value: b.id,
+              text: b.name,
+            }
+            return band
+          })
+          this.bands = bands
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
     save() {
-      $api.post('/music', music)
+      console.log(this.music)
+      // this.$api
+      //   .post('/music', this.music)
+      //   .then((result) => {
+      //     console.log(result)
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //   })
     },
   },
 }

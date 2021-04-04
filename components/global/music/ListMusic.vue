@@ -17,6 +17,21 @@ export default {
   data() {
     return {}
   },
+  methods: {
+    getMusics() {
+      this.$api
+        .get('/music')
+        .then((result) => {
+          console.log(result)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+  },
+  mounted() {
+    this.getMusics()
+  },
 }
 </script>
 <style></style>

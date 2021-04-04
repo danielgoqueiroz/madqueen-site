@@ -10,7 +10,7 @@
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint": "yarn lint:js",
     "test": "jest",
-    "fix": "eslint --fix"
+    "fix": "eslint --fix | nuxt"
   },
   "dependencies": {
     "@nuxt/content": "^1.11.1",
