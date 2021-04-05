@@ -24,49 +24,51 @@
         </b-input-group-append>
       </b-input-group>
 
-      <b-input
-        class="my-1"
-        v-model="music.title"
-        placeholder="Nome da música"
-      ></b-input>
-      <b-input
-        class="my-1"
-        type="number"
-        v-model="music.cratedYear"
-        placeholder="Ano de criação"
-      ></b-input>
-      <b-row>
-        <b-col>
-          <b-form-textarea
-            v-model="music.letterOriginal"
-            class="my-1"
-            placeholder="Letra Original"
-            rows="10"
-            max-rows="6"
-          ></b-form-textarea>
-        </b-col>
-        <b-col>
-          <b-form-textarea
-            v-model="music.letterTranslation"
-            class="my-1"
-            placeholder="Letra Traduzida"
-            rows="10"
-            max-rows="6"
-          ></b-form-textarea>
-        </b-col>
-      </b-row>
-      <b-input
-        v-model="music.youtubeLink"
-        type="url"
-        class="my-1"
-        placeholder="Link youtube"
-      ></b-input>
-      <b-form-file
-        v-model="music.imageLink"
-        class="my-1"
-        placeholder="Imagem"
-      ></b-form-file>
-      <b-button class="my-1" @click="save()">Salvar</b-button>
+      <b-div v-show="music.band.id != null">
+        <b-input
+          class="my-1"
+          v-model="music.title"
+          placeholder="Nome da música"
+        ></b-input>
+        <b-input
+          class="my-1"
+          type="number"
+          v-model="music.cratedYear"
+          placeholder="Ano de criação"
+        ></b-input>
+        <b-row>
+          <b-col>
+            <b-form-textarea
+              v-model="music.letterOriginal"
+              class="my-1"
+              placeholder="Letra Original"
+              rows="10"
+              max-rows="6"
+            ></b-form-textarea>
+          </b-col>
+          <b-col>
+            <b-form-textarea
+              v-model="music.letterTranslation"
+              class="my-1"
+              placeholder="Letra Traduzida"
+              rows="10"
+              max-rows="6"
+            ></b-form-textarea>
+          </b-col>
+        </b-row>
+        <b-input
+          v-model="music.youtubeLink"
+          type="url"
+          class="my-1"
+          placeholder="Link youtube"
+        ></b-input>
+        <b-form-file
+          v-model="music.imageLink"
+          class="my-1"
+          placeholder="Imagem"
+        ></b-form-file>
+        <b-button class="my-1" @click="save()">Salvar</b-button>
+      </b-div>
     </b-card>
   </b-container>
 </template>
@@ -128,16 +130,16 @@ export default {
           console.log(err)
         })
     },
-    save() {
+    async save() {
       console.log(this.music)
-      // this.$api
-      //   .post('/music', this.music)
-      //   .then((result) => {
-      //     console.log(result)
-      //   })
-      //   .catch((err) => {
-      //     console.log(err)
-      //   })
+      await this.$api
+        .post('/music', this.music)
+        .then((result) => {
+          console.log(result)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
   },
 }
