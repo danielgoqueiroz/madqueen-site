@@ -1,15 +1,31 @@
 <template>
-  <b-container
-    ><h3>Nova Musica</h3>
-    <h2><b-icon-plus /></h2>
+  <b-container>
     <b-card>
-      Selecione uma banda
-      <b-form-select
+      Buscar música (Vagalume.com)
+      <b-input-group class="mt-3">
+        <b-form-input
+          v-model="titleMusicSeach"
+          descrption="Buscar da música (vagalume)"
+        ></b-form-input>
+        <template #append>
+          <b-button @click="vagalumeSearch()"><b-icon-search /></b-button>
+        </template>
+      </b-input-group>
+      <b-list-group>
+        <b-list-group-item v-for="music in musicsSearchResult" :key="music.id">
+          {{ music.title }} <b> {{ music.band }} </b>
+        </b-list-group-item>
+
+        <b-list-group-item v-if="!hasResult"
+          >Nenhum resultado para <b>{{ titleMusicSeach }}</b></b-list-group-item
+        >
+      </b-list-group>
+      <!-- <b-form-select
         v-model="music.band.id"
         :options="bands"
         :select-size="4"
-      />
-      <b-input-group
+      /> -->
+      <!-- <b-input-group
         description="Adicionar música"
         label="Nova música"
         class="mt-3"
@@ -67,8 +83,8 @@
           class="my-1"
           placeholder="Imagem"
         ></b-form-file>
-        <b-button class="my-1" @click="save()">Salvar</b-button>
-      </b-div>
+        <b-button class="my-1" @click="save()">Salvar</b-button> -->
+      <!-- </b-div> -->
     </b-card>
   </b-container>
 </template>
@@ -77,6 +93,9 @@
 export default {
   data() {
     return {
+      timer: 0,
+      titleMusicSeach: 'Haven and Hell',
+      musicsSearchResult: [],
       newBand: {
         name: null,
       },
@@ -94,11 +113,48 @@ export default {
       },
     }
   },
+  computed: {
+    hasResult() {
+      if (this.titleMusicSeach.length > 1) {
+        if (this.timer) {
+          clearTimeout(this.timer)
+          this.timer = null
+        }
+        this.timer = setTimeout(() => {
+          this.vagalumeSearch()
+          return true
+        }, 1000)
+      }
+      return false
+    },
+  },
   mounted() {
     console.log('get bands')
     this.getBands()
+    this.searchMusic()
   },
   methods: {
+    vagalumeSearch() {
+      this.$api
+        .get(`music/search?title=${this.titleMusicSeach}`)
+        .then((result) => {
+          this.musicsSearchResult = []
+          this.musicsSearchResult = result.data
+        })
+        .catch((err) => {
+          console.log(err.data)
+        })
+    },
+    async searchMusic() {
+      await this.$api
+        .get(`/music/search/vai passar`)
+        .then((result) => {
+          console.log(result)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
     async saveBand() {
       console.log(this.newBand)
       await this.$api
@@ -118,7 +174,7 @@ export default {
         .then((result) => {
           const bands = result.data.map((b) => {
             console.log(b)
-            let band = {
+            const band = {
               value: b.id,
               text: b.name,
             }
