@@ -4,6 +4,7 @@
       Buscar música (Vagalume.com)
       <b-input-group class="mt-3">
         <b-form-input
+          @keydown="doSearch()"
           v-model="titleMusicSeach"
           descrption="Buscar da música (vagalume)"
         ></b-form-input>
@@ -12,7 +13,12 @@
         </template>
       </b-input-group>
       <b-list-group>
-        <b-list-group-item v-for="music in musicsSearchResult" :key="music.id">
+        <b-list-group-item
+          v-for="music in musicsSearchResult"
+          :key="music.id"
+          button
+          @click="selectMusic(music)"
+        >
           {{ music.title }} <b> {{ music.band }} </b>
         </b-list-group-item>
 
@@ -20,6 +26,7 @@
           >Nenhum resultado para <b>{{ titleMusicSeach }}</b></b-list-group-item
         >
       </b-list-group>
+      {{ selectedMusic }}
       <!-- <b-form-select
         v-model="music.band.id"
         :options="bands"
@@ -93,29 +100,28 @@
 export default {
   data() {
     return {
+      selectedMusic: {},
       timer: 0,
-      titleMusicSeach: 'Haven and Hell',
+      titleMusicSeach: '',
       musicsSearchResult: [],
-      newBand: {
-        name: null,
-      },
-      bands: [],
-      music: {
-        band: {
-          id: null,
-        },
-        title: '',
-        cratedYear: 1990,
-        letterOriginal: '',
-        letterTranslation: '',
-        youtubeLink: '',
-        imageLink: null,
-      },
     }
+  },
+  mounted() {
+    console.log('get bands')
+    this.getBands()
+    this.searchMusic()
   },
   computed: {
     hasResult() {
-      if (this.titleMusicSeach.length > 1) {
+      return this.musicsSearchResult.length > 0
+    },
+  },
+  methods: {
+    doSearch() {
+      if (
+        this.titleMusicSeach != undefined &&
+        this.titleMusicSeach.length > 1
+      ) {
         if (this.timer) {
           clearTimeout(this.timer)
           this.timer = null
@@ -127,13 +133,9 @@ export default {
       }
       return false
     },
-  },
-  mounted() {
-    console.log('get bands')
-    this.getBands()
-    this.searchMusic()
-  },
-  methods: {
+    selectMusic(music) {
+      this.selectedMusic = music
+    },
     vagalumeSearch() {
       this.$api
         .get(`music/search?title=${this.titleMusicSeach}`)
