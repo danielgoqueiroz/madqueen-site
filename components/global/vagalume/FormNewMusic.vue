@@ -9,7 +9,14 @@
           descrption="Buscar da música (vagalume)"
         ></b-form-input>
         <template #append>
-          <b-button @click="vagalumeSearch()"><b-icon-search /></b-button>
+          <b-button @click="vagalumeSearch()">
+            <div v-if="isLoading">
+              <b-icon-search />
+            </div>
+            <div v-else>
+              <b-spinner label="Spinning"></b-spinner>
+            </div>
+          </b-button>
         </template>
       </b-input-group>
       <b-list-group>
@@ -26,73 +33,16 @@
           >Nenhum resultado para <b>{{ titleMusicSeach }}</b></b-list-group-item
         >
       </b-list-group>
-      {{ selectedMusic }}
-      <!-- <b-form-select
-        v-model="music.band.id"
-        :options="bands"
-        :select-size="4"
-      /> -->
-      <!-- <b-input-group
-        description="Adicionar música"
-        label="Nova música"
-        class="mt-3"
-      >
-        <b-form-input v-model="newBand.name" placeholder="Nome"></b-form-input>
-        <b-input-group-append>
-          <b-button
-            @click="saveBand()"
-            :disabled="newBand.name == null || newBand.name.length < 3"
-            >Adicionar banda</b-button
-          >
-        </b-input-group-append>
-      </b-input-group>
-
-      <b-div v-show="music.band.id != null">
-        <b-input
-          class="my-1"
-          v-model="music.title"
-          placeholder="Nome da música"
-        ></b-input>
-        <b-input
-          class="my-1"
-          type="number"
-          v-model="music.cratedYear"
-          placeholder="Ano de criação"
-        ></b-input>
-        <b-row>
-          <b-col>
-            <b-form-textarea
-              v-model="music.letterOriginal"
-              class="my-1"
-              placeholder="Letra Original"
-              rows="10"
-              max-rows="6"
-            ></b-form-textarea>
-          </b-col>
-          <b-col>
-            <b-form-textarea
-              v-model="music.letterTranslation"
-              class="my-1"
-              placeholder="Letra Traduzida"
-              rows="10"
-              max-rows="6"
-            ></b-form-textarea>
-          </b-col>
-        </b-row>
-        <b-input
-          v-model="music.youtubeLink"
-          type="url"
-          class="my-1"
-          placeholder="Link youtube"
-        ></b-input>
-        <b-form-file
-          v-model="music.imageLink"
-          class="my-1"
-          placeholder="Imagem"
-        ></b-form-file>
-        <b-button class="my-1" @click="save()">Salvar</b-button> -->
-      <!-- </b-div> -->
     </b-card>
+    <MusicDetail
+      :title="selectedMusic.title"
+      :band="selectedMusic.band"
+      :letterOriginal="
+        selectedMusic.letters != undefined
+          ? selectedMusic.letters[0].letter
+          : {}
+      "
+    />
   </b-container>
 </template>
 
@@ -100,10 +50,11 @@
 export default {
   data() {
     return {
-      selectedMusic: {},
+      selectedMusic: { title: null, band: null, letters: [{ letter: null }] },
       timer: 0,
       titleMusicSeach: '',
       musicsSearchResult: [],
+      isLoading: true,
     }
   },
   mounted() {
@@ -117,9 +68,19 @@ export default {
     },
   },
   methods: {
+    getLetter(letters) {
+      const size = letters.length
+      if (size === 0) {
+        return {}
+      }
+      if (size > 0) {
+        return letters[0].letter
+      }
+    },
     doSearch() {
+      this.isLoading = false
       if (
-        this.titleMusicSeach != undefined &&
+        this.titleMusicSeach !== undefined &&
         this.titleMusicSeach.length > 1
       ) {
         if (this.timer) {
@@ -131,10 +92,18 @@ export default {
           return true
         }, 1000)
       }
+      this.isLoading = true
       return false
     },
     selectMusic(music) {
-      this.selectedMusic = music
+      this.$api
+        .get(`/music/search/${music.id}`)
+        .then((result) => {
+          this.selectedMusic = result.data
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     vagalumeSearch() {
       this.$api
